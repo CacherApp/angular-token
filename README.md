@@ -178,7 +178,7 @@ constructor(private _tokenService: Angular2TokenService) {
 | `oAuthBase?: string`                    | Configure the OAuth server (used for backends on a different url) |
 | `oAuthPaths?: { [key:string]: string }` | Sets paths for sign in with OAuth        |
 | `oAuthCallbackPath?:  string`           | Sets path for OAuth sameWindow callback  |
-| `oAuthWindowType?:`string`              | Window type for Oauth authentication     |
+| `oAuthWindowType?:string`               | Window type for Oauth authentication     |
 | `oAuthWindowOptions?: { [key:string]: string }` | Set additional options to pass into `window.open()` |
 ### Global Options
 | Options                               | Description                                     |
@@ -305,13 +305,17 @@ Initiates OAuth authentication flow. Currently, it supports two window modes:
 After successful authentication, it redirects back to `oAuthCallbackPath`. Application router needs to intercept
 this route and call `processOAuthCallback()` to fetch `AuthData` from params.
 
-`signInOAuth(oAuthType: string)`
+The function takes an optional key/value hash of additional params you'd like to pass to the OAuth path. This will
+be accessible from `request.env['omniauth.params'']` in the OmniAuth callback.
+
+`signInOAuth(oAuthType: string, params?: { [key:string]: string; } )`
 
 #### Example:
 
 ```javascript
 this._tokenService.signInOAuth(
-'github'
+    'github',
+    { favoriteColor: 'yellow' }
 ).subscribe(
     res =>      console.log(res),
     error =>    console.log(error)
