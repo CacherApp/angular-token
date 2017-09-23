@@ -602,11 +602,9 @@ export class Angular2TokenService implements CanActivate {
             url += `&resource_class=${this.atCurrentUserType.name}`;
         }
 
-        let windowOptions = '';
-
         if (params) {
             for (let key in params) {
-                windowOptions += `&${key}=${encodeURIComponent(params[key])}`;
+                url += `&${key}=${encodeURIComponent(params[key])}`;
             }
         }
 
