@@ -194,12 +194,18 @@ export class Angular2TokenService implements CanActivate {
         return observ;
     }
 
-    signInOAuth(oAuthType: string) {
+    signInOAuth(oAuthType: string,
+                params?: { [key:string]: string; }) {
 
         let oAuthPath: string = this._getOAuthPath(oAuthType);
         let callbackUrl: string = `${window.location.origin}/${this._options.oAuthCallbackPath}`;
         let oAuthWindowType: string = this._options.oAuthWindowType;
-        let authUrl: string = this._getOAuthUrl(oAuthPath, callbackUrl, oAuthWindowType);
+        let authUrl: string = this._getOAuthUrl(
+            oAuthPath,
+            callbackUrl,
+            oAuthWindowType,
+            params
+        );
 
         if (oAuthWindowType == 'newWindow') {
             let oAuthWindowOptions = this._options.oAuthWindowOptions;
@@ -580,15 +586,25 @@ export class Angular2TokenService implements CanActivate {
         return oAuthPath;
     }
 
-    private _getOAuthUrl(oAuthPath: string, callbackUrl: string, windowType: string): string {
+    private _getOAuthUrl(oAuthPath: string,
+                         callbackUrl: string,
+                         windowType: string,
+                         params?: { [key:string]: string; }): string {
         let url: string;
 
         url =   `${this._options.oAuthBase}/${oAuthPath}`;
         url +=  `?omniauth_window_type=${windowType}`;
         url +=  `&auth_origin_url=${encodeURIComponent(callbackUrl)}`;
 
-        if (this._currentUserType != null)
+        if (this._currentUserType != null) {
             url += `&resource_class=${this._currentUserType.name}`;
+        }
+
+        if (params) {
+            for (let key in params) {
+                url += `&${key}=${encodeURIComponent(params[key])}`;
+            }
+        }
 
         return url;
     }
