@@ -1,6 +1,8 @@
 ![Angular2-Token](assets/angular2-token-logo.png)
 
 # Angular2-Token
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/neroniaky/angular2-token.svg)](https://greenkeeper.io/)
 [![Join the chat at https://gitter.im/lynndylanhurley/devise_token_auth](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular2-token/Lobby)
 [![npm version](https://badge.fury.io/js/angular2-token.svg)](https://badge.fury.io/js/angular2-token)
 [![npm downloads](https://img.shields.io/npm/dt/angular2-token.svg)](https://npmjs.org/angular2-token)
@@ -15,6 +17,10 @@ You can try out Angular2-Token [here](https://angular2-token.herokuapp.com/).
 The repository can be found [here](https://github.com/neroniaky/angular2-token-example).
 
 ## Installation
+
+### Requirements
+- Webpack (SystemJS not tested)
+
 1. Install Angular2-Token via NPM with
     ```bash
     npm install angular2-token
@@ -112,6 +118,7 @@ Configuration options can be passed as `Angular2TokenOptions` via `.init()`.
 ```javascript
 constructor(private _tokenService: Angular2TokenService) {
     this._tokenService.init({
+        apiBase:                    null,
         apiPath:                    null,
 
         signInPath:                 'auth/sign_in',
@@ -130,7 +137,7 @@ constructor(private _tokenService: Angular2TokenService) {
         resetPasswordPath:          'auth/password',
         resetPasswordCallback:      window.location.href,
 
-        oAuthHost:                  window.location.origin,
+        oAuthBase:                  window.location.origin,
         oAuthPaths: {
             github:                 'auth/github'
         },
@@ -259,8 +266,7 @@ this._tokenService.validateToken().subscribe(
 
 ### .updatePassword()
 Updates the password for the logged in user.
-
-`updatePassword({password: string, passwordConfirmation: string, currentPassword?: string, userType?: string, resetPasswordToken?: string}): Observable<Response>`
+`updatePassword({password: string, passwordConfirmation: string, passwordCurrent: string, userType?: string, resetPasswordToken?: string}): Observable<Response>`
 
 #### Example:
 ```javascript
@@ -282,7 +288,7 @@ Request a password reset from the server.
 
 #### Example:
 ```javascript
-this._tokenService.updatePassword({
+this._tokenService.resetPassword({
     email: 'example@example.org',
 }).subscribe(
     res =>      console.log(res),

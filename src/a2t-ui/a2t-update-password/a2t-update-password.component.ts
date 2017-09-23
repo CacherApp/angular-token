@@ -7,18 +7,22 @@ import { A2tFormService } from '../a2t-shared';
 import { UPDATE_PASSWORD_FORM } from '../';
 
 @Component({
-    selector:       'a2t-update-password',
-    templateUrl:    './a2t-update-password.component.html',
-    providers:      [A2tFormService]
+    selector:   'a2t-update-password',
+    providers:  [A2tFormService],
+    template: `
+        <a2t-headline>Update your Password</a2t-headline>
+        <a2t-error [errors]="_errors"></a2t-error>
+        <a2t-form>Update Password</a2t-form>
+    `
 })
 export class A2tUpdatePasswordComponent {
 
-    private _errors: string[];
+    _errors: string[];
 
     constructor(
-        private _formService: A2tFormService,
-        private _sessionService: Angular2TokenService,
-        private _router: Router
+        public _formService: A2tFormService,
+        public _sessionService: Angular2TokenService,
+        public _router: Router
     ) {
         this._formService.initForm(UPDATE_PASSWORD_FORM);
         this._formService.submit$.subscribe(

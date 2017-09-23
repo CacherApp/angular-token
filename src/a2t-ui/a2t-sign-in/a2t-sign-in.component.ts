@@ -7,18 +7,23 @@ import { A2tFormService } from '../a2t-shared';
 import { SIGN_IN_FORM } from '../';
 
 @Component({
-    selector:       'a2t-sign-in',
-    templateUrl:    './a2t-sign-in.component.html',
-    providers:      [A2tFormService]
+    selector:   'a2t-sign-in',
+    providers:  [A2tFormService],
+    template: `
+        <a2t-headline>Sign In</a2t-headline>
+        <a2t-error [errors]="_errors"></a2t-error>
+        <a2t-form>Sign In</a2t-form>
+        <a2t-links case="sign-in"></a2t-links>
+    `
 })
 export class A2tSignInComponent {
 
-    private _errors: string[];
+    _errors: string[];
 
     constructor(
-        private _formService: A2tFormService,
-        private _sessionService: Angular2TokenService,
-        private _router: Router
+        public _formService: A2tFormService,
+        public _sessionService: Angular2TokenService,
+        public _router: Router
     ) {
         this._formService.initForm(SIGN_IN_FORM);
         this._formService.submit$.subscribe(
