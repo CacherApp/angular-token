@@ -160,6 +160,7 @@ export class Angular2TokenService implements CanActivate {
         let body = JSON.stringify({
             email: registerData.email,
             name: registerData.name,
+            nickname: registerData.nickname,
             password: registerData.password,
             password_confirmation: registerData.passwordConfirmation,
             confirm_success_url: this._options.registerAccountCallback

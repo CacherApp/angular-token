@@ -222,7 +222,7 @@ this._tokenService.signOut().subscribe(
 ### .registerAccount()
 Sends a new user registration request to the Server.
 
-`registerAccount({email: string, password: string, passwordConfirmation: string, userType?: string}): Observable<Response>`
+`registerAccount({email: string, password: string, passwordConfirmation: string, nickname: string, userType?: string}): Observable<Response>`
 
 #### Example:
 ```javascript
