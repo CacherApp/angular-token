@@ -8,6 +8,7 @@ export interface RegisterData {
     password: string;
     passwordConfirmation: string;
     name?: string;
+    nickname?: string;
     userType?: string;
 }
 export interface UpdatePasswordData {
