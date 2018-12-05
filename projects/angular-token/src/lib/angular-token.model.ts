@@ -13,6 +13,7 @@ export interface RegisterData {
   passwordConfirmation:   string;
   name?:                  string;
   userType?:              string;
+  nickname?:              string;
 }
 
 export interface RegisterData {
