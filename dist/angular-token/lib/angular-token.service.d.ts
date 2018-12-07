@@ -19,6 +19,7 @@ export declare class AngularTokenService implements CanActivate {
     private global;
     private localStorage;
     constructor(http: HttpClient, config: any, platformId: Object, activatedRoute: ActivatedRoute, router: Router);
+    setGlobalOptions(options: GlobalOptions): void;
     userSignedIn(): boolean;
     canActivate(route: any, state: any): boolean;
     /**

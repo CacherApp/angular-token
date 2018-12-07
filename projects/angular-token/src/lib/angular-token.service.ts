@@ -18,7 +18,8 @@ import {
   UserData,
   AuthData,
 
-  AngularTokenOptions, GlobalOptions
+  AngularTokenOptions,
+  GlobalOptions
 } from './angular-token.model';
 
 @Injectable({
@@ -129,6 +130,10 @@ export class AngularTokenService implements CanActivate {
     }
 
     this.tryLoadAuthData();
+  }
+
+  setGlobalOptions(options: GlobalOptions): void {
+    this.options.globalOptions = options;
   }
 
   userSignedIn(): boolean {
