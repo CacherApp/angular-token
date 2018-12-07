@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router, CanActivate } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SignInData, RegisterData, UpdatePasswordData, ResetPasswordData, UserData, AuthData } from './angular-token.model';
+import { SignInData, RegisterData, UpdatePasswordData, ResetPasswordData, UserData, AuthData, GlobalOptions } from './angular-token.model';
 export declare class AngularTokenService implements CanActivate {
     private http;
     private platformId;
@@ -11,6 +11,7 @@ export declare class AngularTokenService implements CanActivate {
     readonly currentUserData: UserData;
     readonly currentAuthData: AuthData;
     readonly apiBase: any;
+    readonly globalOptions: GlobalOptions;
     private options;
     private userType;
     private authData;

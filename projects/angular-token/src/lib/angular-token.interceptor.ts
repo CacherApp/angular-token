@@ -30,6 +30,14 @@ export class AngularTokenInterceptor implements HttpInterceptor {
         'uid':          this.tokenService.currentAuthData.uid
       };
 
+      // Custom headers passed in for each request
+      const globalOptions = this.tokenService.globalOptions;
+      if (globalOptions && globalOptions.headers) {
+        for (let key in globalOptions.headers) {
+          headers[key] = globalOptions.headers[key];
+        }
+      }
+
       req = req.clone({
         setHeaders: headers
       });

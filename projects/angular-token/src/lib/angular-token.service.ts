@@ -18,7 +18,7 @@ import {
   UserData,
   AuthData,
 
-  AngularTokenOptions
+  AngularTokenOptions, GlobalOptions
 } from './angular-token.model';
 
 @Injectable({
@@ -44,6 +44,10 @@ export class AngularTokenService implements CanActivate {
 
   get apiBase(): any {
     return this.options.apiBase;
+  }
+
+  get globalOptions(): GlobalOptions {
+    return this.options.globalOptions;
   }
 
   private options: AngularTokenOptions;
@@ -110,6 +114,10 @@ export class AngularTokenService implements CanActivate {
       oAuthCallbackPath:          'oauth_callback',
       oAuthWindowType:            'newWindow',
       oAuthWindowOptions:         null,
+
+      globalOptions: {
+        headers: {}
+      }
     };
 
     const mergedOptions = (<any>Object).assign(defaultOptions, config);

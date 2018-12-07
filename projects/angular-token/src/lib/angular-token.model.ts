@@ -60,6 +60,12 @@ export interface UserType {
   path:           string;
 }
 
+export interface GlobalOptions {
+  headers?: {
+    [key: string]: string;
+  };
+}
+
 export interface AngularTokenOptions {
   angularTokenOptionsProvider?: Provider;
 
@@ -91,4 +97,5 @@ export interface AngularTokenOptions {
   oAuthCallbackPath?:         string;
   oAuthWindowType?:           string;
   oAuthWindowOptions?:        { [key: string]: string; };
+  globalOptions?: GlobalOptions;
 }
