@@ -440,12 +440,9 @@ export class AngularTokenService implements CanActivate {
       client:         headers.get('client'),
       expiry:         headers.get('expiry'),
       tokenType:      headers.get('token-type'),
-      uid:            headers.get('uid')
+      uid:            headers.get('uid'),
+      provider:       headers.get('provider')
     };
-
-    if (data.body && data.body.data && data.body.data.provider) {
-      authData.provider = data.body.data.provider;
-    }
 
     this.setAuthData(authData);
   }
@@ -523,7 +520,6 @@ export class AngularTokenService implements CanActivate {
       if (this.userType != null) {
         this.localStorage.setItem('userType', this.userType.name);
       }
-
     }
   }
 
