@@ -27,7 +27,8 @@ export class AngularTokenInterceptor implements HttpInterceptor {
         'client':       this.tokenService.currentAuthData.client,
         'expiry':       this.tokenService.currentAuthData.expiry,
         'token-type':   this.tokenService.currentAuthData.tokenType,
-        'uid':          this.tokenService.currentAuthData.uid
+        'uid':          this.tokenService.currentAuthData.uid,
+        'provider':     this.tokenService.currentAuthData.provider
       };
 
       // Custom headers passed in for each request
