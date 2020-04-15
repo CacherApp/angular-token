@@ -18,7 +18,8 @@ import {
   UserData,
   AuthData,
 
-  AngularTokenOptions
+  AngularTokenOptions,
+  GlobalOptions
 } from './angular-token.model';
 
 @Injectable({
@@ -44,6 +45,10 @@ export class AngularTokenService implements CanActivate {
 
   get apiBase(): any {
     return this.options.apiBase;
+  }
+
+  get globalOptions(): GlobalOptions {
+    return this.options.globalOptions;
   }
 
   private options: AngularTokenOptions;
@@ -110,6 +115,10 @@ export class AngularTokenService implements CanActivate {
       oAuthCallbackPath:          'oauth_callback',
       oAuthWindowType:            'newWindow',
       oAuthWindowOptions:         null,
+
+      globalOptions: {
+        headers: {}
+      }
     };
 
     const mergedOptions = (<any>Object).assign(defaultOptions, config);
@@ -121,6 +130,10 @@ export class AngularTokenService implements CanActivate {
     }
 
     this.tryLoadAuthData();
+  }
+
+  setGlobalOptions(options: GlobalOptions): void {
+    this.options.globalOptions = options;
   }
 
   userSignedIn(): boolean {
@@ -205,12 +218,18 @@ export class AngularTokenService implements CanActivate {
     return observ;
   }
 
-  signInOAuth(oAuthType: string) {
+  signInOAuth(oAuthType: string,
+              params?: { [key:string]: string; }) {
 
     const oAuthPath: string = this.getOAuthPath(oAuthType);
     const callbackUrl = `${this.global.location.origin}/${this.options.oAuthCallbackPath}`;
     const oAuthWindowType: string = this.options.oAuthWindowType;
-    const authUrl: string = this.getOAuthUrl(oAuthPath, callbackUrl, oAuthWindowType);
+    const authUrl: string = this.getOAuthUrl(
+      oAuthPath,
+      callbackUrl,
+      oAuthWindowType,
+      params
+    );
 
     if (oAuthWindowType === 'newWindow') {
       const oAuthWindowOptions = this.options.oAuthWindowOptions;
@@ -362,7 +381,10 @@ export class AngularTokenService implements CanActivate {
     return oAuthPath;
   }
 
-  private getOAuthUrl(oAuthPath: string, callbackUrl: string, windowType: string): string {
+  private getOAuthUrl(oAuthPath: string,
+                      callbackUrl: string,
+                      windowType: string,
+                      params?: { [key:string]: string; }): string {
     let url: string;
 
     url =   `${this.options.oAuthBase}/${oAuthPath}`;
@@ -371,6 +393,12 @@ export class AngularTokenService implements CanActivate {
 
     if (this.userType != null) {
       url += `&resource_class=${this.userType.name}`;
+    }
+
+    if (params) {
+      for (let key in params) {
+        url += `&${key}=${encodeURIComponent(params[key])}`;
+      }
     }
 
     return url;
@@ -547,7 +575,9 @@ export class AngularTokenService implements CanActivate {
   }
 
   private oAuthWindowResponseFilter(data: any): any {
-    if (data.message === 'deliverCredentials' || data.message === 'authFailure') {
+    if (data.message === 'deliverCredentials'
+      || data.message === 'authFailure'
+      || data.message === 'deliverProviderAuth') {
       return data;
     }
   }
