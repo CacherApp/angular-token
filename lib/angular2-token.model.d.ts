@@ -21,6 +21,7 @@ export interface UpdatePasswordData {
 export interface ResetPasswordData {
     email: string;
     userType?: string;
+    F: any;
 }
 export interface AuthData {
     accessToken: string;
@@ -28,6 +29,7 @@ export interface AuthData {
     expiry: string;
     tokenType: string;
     uid: string;
+    provider?: string;
 }
 export interface UserData {
     id: number;

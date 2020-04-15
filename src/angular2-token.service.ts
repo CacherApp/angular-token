@@ -55,7 +55,8 @@ export class Angular2TokenService implements CanActivate {
                 'client': this._currentAuthData.client,
                 'expiry': this._currentAuthData.expiry,
                 'token-type': this._currentAuthData.tokenType,
-                'uid': this._currentAuthData.uid
+                'uid': this._currentAuthData.uid,
+                'provider': this._currentAuthData.provider
             });
         }
 
@@ -243,6 +244,7 @@ export class Angular2TokenService implements CanActivate {
         localStorage.removeItem('expiry');
         localStorage.removeItem('tokenType');
         localStorage.removeItem('uid');
+        localStorage.removeItem('provider');
 
         this._currentAuthData = null;
         this._currentUserType = null;
@@ -382,7 +384,8 @@ export class Angular2TokenService implements CanActivate {
                 'client': this._currentAuthData.client,
                 'expiry': this._currentAuthData.expiry,
                 'token-type': this._currentAuthData.tokenType,
-                'uid': this._currentAuthData.uid
+                'uid': this._currentAuthData.uid,
+                'provider': this._currentAuthData.provider
             });
         }
 
@@ -449,7 +452,8 @@ export class Angular2TokenService implements CanActivate {
             client: headers.get('client'),
             expiry: headers.get('expiry'),
             tokenType: headers.get('token-type'),
-            uid: headers.get('uid')
+            uid: headers.get('uid'),
+            provider: headers.get('provider')
         };
 
         this._setAuthData(authData);
@@ -462,7 +466,8 @@ export class Angular2TokenService implements CanActivate {
             client: data['client_id'],
             expiry: data['expiry'],
             tokenType: 'Bearer',
-            uid: data['uid']
+            uid: data['uid'],
+            provider: data['provider']
         };
 
         this._setAuthData(authData);
@@ -476,7 +481,8 @@ export class Angular2TokenService implements CanActivate {
             client: localStorage.getItem('client'),
             expiry: localStorage.getItem('expiry'),
             tokenType: localStorage.getItem('tokenType'),
-            uid: localStorage.getItem('uid')
+            uid: localStorage.getItem('uid'),
+            provider: localStorage.getItem('provider')
         };
 
         if (this._checkAuthData(authData))
@@ -492,7 +498,8 @@ export class Angular2TokenService implements CanActivate {
                     client: queryParams['client_id'],
                     expiry: queryParams['expiry'],
                     tokenType: 'Bearer',
-                    uid: queryParams['uid']
+                    uid: queryParams['uid'],
+                    provider: queryParams['provider']
                 };
 
                 if (this._checkAuthData(authData))
@@ -518,6 +525,7 @@ export class Angular2TokenService implements CanActivate {
             localStorage.setItem('expiry', authData.expiry);
             localStorage.setItem('tokenType', authData.tokenType);
             localStorage.setItem('uid', authData.uid);
+            localStorage.setItem('provider', authData.provider);
 
             if (this._currentUserType != null)
                 localStorage.setItem('userType', this._currentUserType.name);
