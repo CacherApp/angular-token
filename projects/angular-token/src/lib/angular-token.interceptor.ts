@@ -22,14 +22,19 @@ export class AngularTokenInterceptor implements HttpInterceptor {
     // Add the headers if the request is going to the configured server
     if (this.tokenService.currentAuthData && (this.tokenService.apiBase === null || req.url.match(this.tokenService.apiBase))) {
 
+
       const headers = {
         'access-token': this.tokenService.currentAuthData.accessToken,
         'client':       this.tokenService.currentAuthData.client,
         'expiry':       this.tokenService.currentAuthData.expiry,
         'token-type':   this.tokenService.currentAuthData.tokenType,
-        'uid':          this.tokenService.currentAuthData.uid,
-        'provider':     this.tokenService.currentAuthData.provider
+        'uid':          this.tokenService.currentAuthData.uid
       };
+
+      const provider = this.tokenService.currentAuthData.provider;
+      if (provider) {
+        headers['provider'] = provider;
+      }
 
       // Custom headers passed in for each request
       const globalOptions = this.tokenService.globalOptions;
