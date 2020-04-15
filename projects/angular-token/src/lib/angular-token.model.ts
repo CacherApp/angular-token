@@ -41,6 +41,7 @@ export interface AuthData {
   expiry:         string;
   tokenType:      string;
   uid:            string;
+  provider?:       string;
 }
 
 export interface UserData {

@@ -443,6 +443,10 @@ export class AngularTokenService implements CanActivate {
       uid:            headers.get('uid')
     };
 
+    if (data.body && data.body.data && data.body.data.provider) {
+      authData.provider = data.body.data.provider;
+    }
+
     this.setAuthData(authData);
   }
 
@@ -453,7 +457,8 @@ export class AngularTokenService implements CanActivate {
       client:         data['client_id'],
       expiry:         data['expiry'],
       tokenType:      'Bearer',
-      uid:            data['uid']
+      uid:            data['uid'],
+      provider:       data['provider']
     };
 
     this.setAuthData(authData);
@@ -467,7 +472,8 @@ export class AngularTokenService implements CanActivate {
       client:         this.localStorage.getItem('client'),
       expiry:         this.localStorage.getItem('expiry'),
       tokenType:      this.localStorage.getItem('tokenType'),
-      uid:            this.localStorage.getItem('uid')
+      uid:            this.localStorage.getItem('uid'),
+      provider:       this.localStorage.getItem('provider')
     };
 
     if (this.checkAuthData(authData)) {
@@ -483,7 +489,8 @@ export class AngularTokenService implements CanActivate {
         client:         queryParams['client_id'],
         expiry:         queryParams['expiry'],
         tokenType:      'Bearer',
-        uid:            queryParams['uid']
+        uid:            queryParams['uid'],
+        provider:       queryParams['provider']
       };
 
       if (this.checkAuthData(authData)) {
@@ -501,7 +508,6 @@ export class AngularTokenService implements CanActivate {
   // Write auth data to storage
   private setAuthData(authData: AuthData): void {
     if (this.checkAuthData(authData)) {
-
       this.authData = authData;
 
       this.localStorage.setItem('accessToken', authData.accessToken);
@@ -509,6 +515,10 @@ export class AngularTokenService implements CanActivate {
       this.localStorage.setItem('expiry', authData.expiry);
       this.localStorage.setItem('tokenType', authData.tokenType);
       this.localStorage.setItem('uid', authData.uid);
+
+      if (authData.provider) {
+        this.localStorage.setItem('provider', authData.provider);
+      }
 
       if (this.userType != null) {
         this.localStorage.setItem('userType', this.userType.name);
