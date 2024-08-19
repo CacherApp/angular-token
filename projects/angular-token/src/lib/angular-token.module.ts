@@ -16,7 +16,7 @@ export class AngularTokenModule {
       throw new Error('AngularToken is already loaded. It should only be imported in your application\'s main module.');
     }
   }
-  static forRoot(options: AngularTokenOptions): ModuleWithProviders {
+  static forRoot(options: AngularTokenOptions): ModuleWithProviders<AngularTokenModule> {
     return {
       ngModule: AngularTokenModule,
       providers: [
